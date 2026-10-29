@@ -1,0 +1,1 @@
+-- Gold consumption views will be defined after data profiling.
