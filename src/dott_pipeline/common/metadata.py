@@ -21,16 +21,3 @@ def build_metadata(response, source_name=None, source_url=None):
             "ttl": payload.get("ttl")
         }
     }
-
-
-# def build_metadata(response):
-#     """Build metadata from the API response."""
-#     timestamp = response.json().get("last_updated")
-#     datetime_obj = datetime.fromtimestamp(timestamp) if timestamp else None
-#     format_date = datetime_obj.strftime('%d/%m/%Y %H:%M:%S') if datetime_obj else None
-#     return {
-#         "name": response.json().get("name"),
-#         "source_url": response.json().get("url"),
-#         "ingestion_timestamp": format_date,
-#         "http_status": response.status_code,
-#     }
