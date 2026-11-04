@@ -4,6 +4,7 @@
 !.env.example
 
 # Python
+*.egg-info/
 __pycache__/
 *.py[cod]
 .pytest_cache/
