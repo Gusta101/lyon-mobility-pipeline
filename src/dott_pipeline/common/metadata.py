@@ -1,16 +1,32 @@
-from datetime import datetime
-import uuid
+from importlib.metadata import version
+import hashlib
 
 
-def build_metadata(response, source_name=None, source_url=None):
+def build_metadata(
+        response,
+        run_id,
+        source_name = None,
+        source_url = None,
+        requested_at = None,
+        received_at = None
+    ):
     """Build metadata from the API response."""
     payload = response.json()
+    first = next(iter(payload.get("data", {}).values()), None)
     return {
+        "run_id": run_id,
         "ingestion": {
-            "id": str(uuid.uuid4()),
-            "timestamp": datetime.now().strftime('%d/%m/%Y %H:%M:%S'),
             "http_status": response.status_code,
-            "response_size_bytes": len(response.content)
+            "content_type": response.headers.get("Content-Type"),
+            "response_size_bytes": len(response.content),
+            
+            "requested_at_utc": requested_at,
+            "received_at_utc": received_at,
+            
+            "checksum": hashlib.sha256(response.content).hexdigest(),
+            "record_count": len(first) if first is not None and hasattr(first, "__len__") else None,
+            
+            "pipeline_version": version("dott-lyon-medallion-pipeline")
         },
         
         "source": {

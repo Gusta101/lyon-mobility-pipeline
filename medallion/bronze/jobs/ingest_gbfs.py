@@ -1,27 +1,31 @@
 """Bronze ingestion"""
 
-from dott_pipeline.clients.gbfs import get_api_response
-from dott_pipeline.common.metadata import build_metadata
 from dott_pipeline.quality.gbfs import validate_discovery, validate_feed, validate_feed_data
+from dott_pipeline.clients.gbfs import get_api_response
 from dott_pipeline.storage.json import dump_json
-
+from dotenv import load_dotenv
 from pathlib import Path
 
+import uuid
+import os
 
-URL = "https://gbfs.api.ridedott.com/public/v2/lyon/gbfs.json"
 
+load_dotenv()
+url_gbfs = os.getenv("DOTT_GBFS_DISCOVERY_URL")
 base_path = Path(__file__).parent.parent.parent
 
 
 def main():
     """Ingest GBFS data."""
-    response = get_api_response(URL)
+    
+    run_id = str(uuid.uuid4())
+    
+    response, metadata = get_api_response(url_gbfs, name="feeds_catalog", run_id=run_id)
     data = response.json()
     
     validate_discovery(data)
     
     path = base_path / "bronze" / "data" / "lyon"
-    metadata = build_metadata(response, source_name="feeds_catalog", source_url=URL)
     
     dump_json(path, "payload.json", data)
     dump_json(path, "metadata.json", metadata)
@@ -29,13 +33,12 @@ def main():
     for feed in data["data"]["en"]["feeds"]:
         validate_feed(feed)
         
-        response = get_api_response(feed["url"])
+        response, metadata = get_api_response(feed["url"], name=feed["name"], run_id=run_id)
         data = response.json()
         
         validate_feed_data(data)
         
         path_feed = path / feed["name"]
-        metadata = build_metadata(response, source_name=feed["name"], source_url=feed["url"])
         
         dump_json(path_feed, "payload.json", data)
         dump_json(path_feed, "metadata.json", metadata)
