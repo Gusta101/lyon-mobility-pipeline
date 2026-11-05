@@ -24,8 +24,8 @@ logs/
 .airflow/
 
 # Local data: keep directory markers only
-medallion/*/data/**
-!medallion/*/data/.gitkeep
+medallion/*/dott-lyon/**
+!medallion/*/dott-lyon/.gitkeep
 *.parquet
 *.jsonl
 *.csv
