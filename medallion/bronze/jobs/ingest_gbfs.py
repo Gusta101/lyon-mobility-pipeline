@@ -1,13 +1,30 @@
-"""Bronze ingestion"""
+"""GBFS Bronze ingestion pipeline.
 
-from dott_pipeline.quality.gbfs import validate_discovery, validate_feed, validate_feed_data
-from dott_pipeline.clients.gbfs import get_api_response
-from dott_pipeline.storage.bronze import save_snapshot
-from dott_pipeline.storage.json import dump_json
-from dotenv import load_dotenv
-from pathlib import Path
-import uuid
+This script:
+
+1. Loads the GBFS discovery endpoint.
+2. Validates discovery data.
+3. Retrieves all available feeds.
+4. Validates feed payloads.
+5. Persists raw snapshots in the Bronze layer.
+
+Each execution generates a unique run ID used for traceability
+across all ingested feeds.
+"""
+
 import os
+import uuid
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+from dott_pipeline.clients.gbfs import get_api_response
+from dott_pipeline.quality.gbfs import (
+    validate_discovery,
+    validate_feed,
+    validate_feed_data,
+)
+from dott_pipeline.storage.bronze import save_snapshot
 
 load_dotenv()
 url_gbfs = os.getenv("DOTT_GBFS_DISCOVERY_URL")

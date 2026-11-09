@@ -8,12 +8,15 @@ from datetime import UTC, datetime
 
 import requests
 
+from dott_pipeline.common.contracts import Metadata
 from dott_pipeline.common.metadata import build_metadata
 
 
-
-def get_api_response(url, name, run_id):
-    """Fetch data from the API."""
+def get_api_response(
+    url: str,
+    name: str,
+    run_id: str,
+) -> tuple[requests.Response, Metadata]:
     """Retrieve a GBFS resource and generate ingestion metadata.
 
     Args:

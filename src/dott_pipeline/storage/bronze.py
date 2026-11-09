@@ -1,13 +1,13 @@
 from pathlib import Path
 from typing import Any
-from dott_pipeline.storage.paths import build_bronze_snapshot_path
+
+from dott_pipeline.common.contracts import Metadata
 from dott_pipeline.storage.json import dump_json
-from pathlib import Path
+from dott_pipeline.storage.paths import build_bronze_snapshot_path
 
 
-def save_snapshot(base_path: Path, data: dict, metadata: dict):
-    """
-    Persist a Bronze-layer snapshot of a GBFS feed.
+def save_snapshot(base_path: Path, data: dict[str, Any], metadata: Metadata) -> None:
+    """Persist a Bronze-layer snapshot of a GBFS feed.
 
     Creates a partitioned directory structure based on feed name,
     ingestion date and run ID, then stores both payload and metadata
