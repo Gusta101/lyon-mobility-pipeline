@@ -12,13 +12,13 @@ Each execution generates a unique run ID used for traceability
 across all ingested feeds.
 """
 
-import os
 import uuid
 from pathlib import Path
 
 from dotenv import load_dotenv
 
 from dott_pipeline.clients.gbfs import get_api_response
+from dott_pipeline.common.env import get_str_env
 from dott_pipeline.quality.gbfs import (
     validate_discovery,
     validate_feed,
@@ -27,8 +27,9 @@ from dott_pipeline.quality.gbfs import (
 from dott_pipeline.storage.bronze import save_snapshot
 
 load_dotenv()
-url_gbfs = os.getenv("DOTT_GBFS_DISCOVERY_URL")
 base_path = Path(__file__).parent.parent.parent
+url_gbfs = get_str_env("DOTT_GBFS_DISCOVERY_URL")
+
 
 def main() -> None:
     """Execute a full GBFS Bronze ingestion run.
