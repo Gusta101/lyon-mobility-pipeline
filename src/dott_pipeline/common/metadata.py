@@ -1,3 +1,8 @@
+"""Metadata generation utilities.
+
+Builds standardized metadata records used to track ingestion
+executions, source information and payload characteristics.
+"""
 from importlib.metadata import version
 import hashlib
 
@@ -24,16 +29,16 @@ def build_metadata(
             "received_at_utc": received_at,
             
             "checksum": hashlib.sha256(response.content).hexdigest(),
-            "record_count": len(first) if first is not None and hasattr(first, "__len__") else None,
-            
-            "pipeline_version": version("dott-lyon-medallion-pipeline")
+            "record_count": len(first)
+            if first is not None and hasattr(first, "__len__")
+            else None,
+            "pipeline_version": version("dott-lyon-medallion-pipeline"),
         },
-        
         "source": {
             "name": source_name,
             "url": source_url,
             "version": payload.get("version"),
             "last_updated": payload.get("last_updated"),
-            "ttl": payload.get("ttl")
-        }
+            "ttl": payload.get("ttl"),
+        },
     }
