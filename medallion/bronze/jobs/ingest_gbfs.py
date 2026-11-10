@@ -44,6 +44,8 @@ def main() -> None:
 
     validate_discovery(discovery_data)
 
+    save_snapshot(base_path, discovery_data, metadata)
+
     # Iterate through each feed in the GBFS discovery data
     for feed in discovery_data["data"]["en"]["feeds"]:
         validate_feed(feed)
