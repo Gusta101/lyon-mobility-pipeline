@@ -1,0 +1,23 @@
+{
+    "data": {
+        "stations": [
+            {
+                "is_installed": true,
+                "is_renting": true,
+                "is_returning": true,
+                "last_reported": 1794253520,
+                "num_bikes_available": 0,
+                "station_id": "1234abcd-12ab-ab12-1a2b-1234567890ab",
+                "vehicle_types_available": [
+                    {
+                        "count": 10,
+                        "vehicle_type_id": "dott_scooter"
+                    }
+                ]
+            }
+        ]
+    },
+    "last_updated": 1794334885,
+    "ttl": 0,
+    "version": "2.3"
+}

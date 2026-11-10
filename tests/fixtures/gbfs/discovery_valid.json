@@ -1,0 +1,19 @@
+{
+    "last_updated": 1735689600,
+    "ttl": 60,
+    "version": "2.3",
+    "data": {
+        "en": {
+            "feeds": [
+                {
+                    "name": "vehicle_status",
+                    "url": "https://example.test/vehicle_status.json"
+                },
+                {
+                    "name": "vehicle_types",
+                    "url": "https://example.test/vehicle_types.json"
+                }
+            ]
+        }
+    }
+}
