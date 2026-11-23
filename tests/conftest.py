@@ -7,11 +7,14 @@ base_path = Path(__file__).parent / "fixtures" / "gbfs"
 
 
 @pytest.fixture
-def load_json_fixture(path: str):
+def load_json_fixture():
     """Fixture que retorna um dicionário a partir de um arquivo JSON.
 
     Localizado em tests/fixtures/gbfs.
     """
-    with open(base_path / path, "r", encoding="utf-8") as f:
-        dados = json.load(f)
-    return dados
+
+    def _load(path: str):
+        with open(base_path / path, "r", encoding="utf-8") as f:
+            return json.load(f)
+
+    return _load
