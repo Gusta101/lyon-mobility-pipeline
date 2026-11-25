@@ -38,3 +38,7 @@ derby.log
 # Test coverage
 .coverage
 htmlcov/
+
+# Personal Notes
+Notes.txt
+Compiled.txt
