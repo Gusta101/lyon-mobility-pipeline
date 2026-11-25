@@ -21,7 +21,7 @@ def test_build_bronze_snapshot_path() -> None:
         / "bronze"
         / "dott-lyon"
         / "test_feed"
-        / "ingestion_date=2023-01-09"
+        / "ingestion_date=2023-01-01"
         / "run_id=123e4567-e89b-12d3-a456-426614174000"
     )
 
